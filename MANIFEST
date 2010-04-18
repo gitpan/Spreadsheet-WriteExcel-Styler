@@ -1,0 +1,9 @@
+Build.PL
+Changes
+lib/Spreadsheet/WriteExcel/Styler.pm
+MANIFEST
+README
+t/00-load.t
+t/01-styler.t
+t/pod.t
+META.yml

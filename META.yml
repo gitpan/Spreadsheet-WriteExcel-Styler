@@ -1,0 +1,21 @@
+---
+name: Spreadsheet-WriteExcel-Styler
+version: 1.00
+author:
+  - 'Laurent Dami <laurent.dami AT etat ge ch>'
+abstract: Styles for formatting Spreadsheet::WriteExcel
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+build_requires:
+  Test::More: 0
+configure_requires:
+  Module::Build: 0.35
+provides:
+  Spreadsheet::WriteExcel::Styler:
+    file: lib/Spreadsheet/WriteExcel/Styler.pm
+    version: 1.00
+generated_by: Module::Build version 0.350001
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
