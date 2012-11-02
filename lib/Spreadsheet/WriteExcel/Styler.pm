@@ -3,7 +3,7 @@ use warnings;
 use strict;
 use Carp;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 
 # shorthand notation: $styler->(..) instead of $styler->format(..)
 use overload
@@ -54,8 +54,13 @@ sub format {
 
   # retrieve format for that combination of styles ... or create a new one
   my $format_name = join $;, sort @styles;
-  return $self->{format}{$format_name}
-    ||= $self->{workbook}->add_format(map {%{$self->{style}{$_}}} @styles);
+  $self->{format}{$format_name} ||= do {
+    my @unknown = grep {!$self->{style}{$_}} @styles;
+    !@unknown
+      or croak "unknown style : " . join ", ", @unknown;
+    $self->{workbook}->add_format(map {%{$self->{style}{$_}}} @styles);
+  };
+  return $self->{format}{$format_name};
 }
 
 sub workbook {

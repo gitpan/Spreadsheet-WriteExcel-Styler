@@ -7,3 +7,4 @@ t/00-load.t
 t/01-styler.t
 t/pod.t
 META.yml
+META.json

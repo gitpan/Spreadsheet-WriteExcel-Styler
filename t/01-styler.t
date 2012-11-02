@@ -19,7 +19,7 @@ package main;
 use strict;
 use warnings;
 use Spreadsheet::WriteExcel::Styler;
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 # create a styler object
 my $workbook  = _MockWorkbook->new;
@@ -55,3 +55,7 @@ isnt($fmt1, $fmt3,          "different features");
 is  ($fmt1, $fmt4,          "array/hashref are equivalent");
 is  ($fmt4, $fmt5,          "arrayref/hashref are equivalent");
 
+# error-checking
+eval {$styler->(qw/title foo bar/)};
+my $err = $@;
+like($err, qr/unknown style/, 'error checking');
