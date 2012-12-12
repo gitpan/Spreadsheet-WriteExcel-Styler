@@ -3,7 +3,7 @@ use warnings;
 use strict;
 use Carp;
 
-our $VERSION = '1.01';
+our $VERSION = '1.02';
 
 # shorthand notation: $styler->(..) instead of $styler->format(..)
 use overload
@@ -14,7 +14,8 @@ sub new {
   my $class    = shift;
   my $workbook = shift;
 
-  $workbook->isa('Spreadsheet::WriteExcel') or croak "improper 'workbook' arg";
+  ref $workbook && $workbook->can('add_format') 
+    or croak "improper 'workbook' arg (has no 'add_format' method)";
 
   my $self = { workbook => $workbook, # ref to workbook
                style    => {},        # hash of styles and features
@@ -85,15 +86,16 @@ __END__
 
 =head1 NAME
 
-Spreadsheet::WriteExcel::Styler - Styles for formatting Spreadsheet::WriteExcel
+Spreadsheet::WriteExcel::Styler - Styles for formatting generated Excel files
 
 =head1 SYNOPSIS
 
-  use Spreadsheet::WriteExcel;
+  use Spreadsheet::WriteExcel; # or use Excel::Writer::XLSX
   use Spreadsheet::WriteExcel::Styler;
 
   # Create an Excel workbook and worksheet
   my $workbook = Spreadsheet::WriteExcel->new('output.xls');
+               # or Excel::Writer::XLSX->new('output.xls');
   $worksheet = $workbook->add_worksheet();
 
   # Create a styler with some styles 
@@ -124,26 +126,27 @@ Spreadsheet::WriteExcel::Styler - Styles for formatting Spreadsheet::WriteExcel
 =head1 DESCRIPTION
 
 This is a small utility to help formatting cells while
-creating Excel workbooks through L<Spreadsheet::WriteExcel>.
+creating Excel workbooks through L<Spreadsheet::WriteExcel>
+or L<Excel::Writer::XLSX>.
 
 When working interactively within the Excel application, users often
 change one format feature at a time (highlight a row, add a border to
 a column, etc.); these changes do not affect other format features
 (for example if you change the background color, it does not affect
 fonts, borders, or cell alignment).  By contrast, when generating a
-workbook programmatically through L<Spreadsheet::WriteExcel>, formats
-express complete sets of features, and they cannot be combined
-together. This means that the programmer has to prepare in advance all
-formats for all possible combinations of format features, and has to
-invent a way of cataloguing those combinations.
+workbook programmatically through L<Spreadsheet::WriteExcel> or
+L<Excel::Writer::XLSX>, formats express complete sets of features, and
+they cannot be combined together. This means that the programmer has
+to prepare in advance all formats for all possible combinations of
+format features, and has to invent a way of cataloguing those
+combinations.
 
 Styler objects from the current module come to the rescue: they hold a
 catalogue of I<styles>, where each style is a collection of format
 features.  Then, for any combination of styles, the styler generates a
-L<Spreadsheet::WriteExcel::Format> on the fly, or, if a similar
-combination was already encountered, retrieves the format from its
-internal cache.
-
+L<Spreadsheet::WriteExcel::Format> or L<Excel::Writer::XLSX::Format>
+on the fly, or, if a similar combination was already encountered,
+retrieves the format from its internal cache.
 
 =head1 METHODS
 
@@ -183,7 +186,7 @@ L<add_format|Spreadsheet::WriteExcel/"add_format"> method).
 
 The C<format> method can be invoked either as a regular method call,
 or, in shorthand notation, as a simple coderef call (arrow operator and
-parentheses). It returns a L<Spreadsheet::WriteExcel::Format> object,
+parentheses). It returns a C<Format> object,
 either retrieved from cache, or created on the fly, that can then be
 passed as argument to any of the worksheet's write methods.
 
@@ -272,9 +275,9 @@ L<http://annocpan.org/dist/Spreadsheet-WriteExcel-Styler>
 
 L<http://cpanratings.perl.org/d/Spreadsheet-WriteExcel-Styler>
 
-=item Search CPAN
+=item METACPAN
 
-L<http://search.cpan.org/dist/Spreadsheet-WriteExcel-Styler/>
+L<https://metacpan.org/dist/Spreadsheet-WriteExcel-Styler/>
 
 =back
 
@@ -282,12 +285,13 @@ L<http://search.cpan.org/dist/Spreadsheet-WriteExcel-Styler/>
 =head1 ACKNOWLEDGEMENTS
 
 Thanks to John McNamara and to all other contributors for
-the wonderful L<Spreadsheet::WriteExcel> module.
+the wonderful L<Spreadsheet::WriteExcel> 
+and L<Excel::Writer::XLSX> modules.
 
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2010 Laurent Dami.
+Copyright 2010, 2012 Laurent Dami.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

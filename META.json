@@ -1,5 +1,5 @@
 {
-   "abstract" : "Styles for formatting Spreadsheet::WriteExcel",
+   "abstract" : "Styles for formatting generated Excel files",
    "author" : [
       "Laurent Dami <laurent.dami AT etat ge ch>"
    ],
@@ -28,7 +28,7 @@
    "provides" : {
       "Spreadsheet::WriteExcel::Styler" : {
          "file" : "lib/Spreadsheet/WriteExcel/Styler.pm",
-         "version" : "1.01"
+         "version" : "1.02"
       }
    },
    "release_status" : "stable",
@@ -37,5 +37,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "1.01"
+   "version" : "1.02"
 }

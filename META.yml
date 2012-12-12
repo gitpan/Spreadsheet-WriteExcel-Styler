@@ -1,5 +1,5 @@
 ---
-abstract: Styles for formatting Spreadsheet::WriteExcel
+abstract: Styles for formatting generated Excel files
 author:
   - 'Laurent Dami <laurent.dami AT etat ge ch>'
 build_requires:
@@ -16,7 +16,7 @@ name: Spreadsheet-WriteExcel-Styler
 provides:
   Spreadsheet::WriteExcel::Styler:
     file: lib/Spreadsheet/WriteExcel/Styler.pm
-    version: 1.01
+    version: 1.02
 resources:
   license: http://dev.perl.org/licenses/
-version: 1.01
+version: 1.02

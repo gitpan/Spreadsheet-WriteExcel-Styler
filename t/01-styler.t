@@ -1,6 +1,5 @@
 # first a mock package to simulate Spreadsheet::WriteExcel workbooks
 package _MockWorkbook;
-our @ISA = qw/Spreadsheet::WriteExcel/;
 
 sub new {
   my $class = shift;
